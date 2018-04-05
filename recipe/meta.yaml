@@ -1,7 +1,7 @@
 {% set name = "vmprof" %}
 {% set github_name = "vmprof-python" %}
-{% set version = "0.4.9" %}
-{% set sha256 = "cf27aa1a2f44e0c8eb2efc992375530bcad793cc81717ba5d4394ba186948826" %}
+{% set version = "0.4.12" %}
+{% set sha256 = "c2a6bbf6e930d2174d01ae55ed21f419b5b4419ce05b2c92b8c8aac49dec49db" %}
 
 package:
   name: {{ name|lower }}
