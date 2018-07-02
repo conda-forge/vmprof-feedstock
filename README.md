@@ -17,14 +17,16 @@ an assembler log visualizer for PyPy.
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/vmprof-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/vmprof-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/vmprof-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/vmprof-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/vmprof-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/vmprof-feedstock/branch/master)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/vmprof-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/vmprof-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/vmprof-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/vmprof-feedstock)
+[![Windows](https://img.shields.io/appveyor/ci/conda-forge/vmprof-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/vmprof-feedstock/branch/master)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/vmprof/badges/version.svg)](https://anaconda.org/conda-forge/vmprof)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/vmprof/badges/downloads.svg)](https://anaconda.org/conda-forge/vmprof)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-vmprof-green.svg)](https://anaconda.org/conda-forge/vmprof) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/vmprof.svg)](https://anaconda.org/conda-forge/vmprof) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/vmprof.svg)](https://anaconda.org/conda-forge/vmprof) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/vmprof.svg)](https://anaconda.org/conda-forge/vmprof) |
 
 Installing vmprof
 =================
