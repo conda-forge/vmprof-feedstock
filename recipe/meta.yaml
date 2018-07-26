@@ -1,28 +1,28 @@
 {% set name = "vmprof" %}
-{% set github_name = "vmprof-python" %}
-{% set version = "0.4.11" %}
-{% set sha256 = "f57e93ff06ca78e27b1b082fe854324db8570ad20f3a1154a7e9dba38c2ab3c2" %}
+{% set version = "0.4.12" %}
+{% set sha256 = "64c62cd737c88573447d1f90f29978fc3178a1663ddbdb60cdcb3f2c15e427da" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ github_name }}-{{ version }}.tar.gz
   url: https://github.com/vmprof/vmprof-python/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
   number: 0
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script: python -m pip install --no-deps --ignore-installed .
   entry_points:
     - vmprofshow = vmprof.show:main
 
 requirements:
   build:
+    - {{ compiler('c') }}
+  host:
     - python
+    - pip
     - setuptools
-    - toolchain
     - libunwind  # [linux]
   run:
     - python
