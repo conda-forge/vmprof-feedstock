@@ -45,7 +45,7 @@ test:
     - pytest
     - cffi
     - hypothesis
-    - toolchain
+    - {{ compiler('c') }}
   source_files:
     - vmprof
     - src
