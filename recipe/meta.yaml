@@ -42,6 +42,7 @@ test:
     - vmprofshow --help
     - py.test vmprof/ -vrs
   requires:
+    - {{ compiler('c') }}
     - pytest
     - cffi
     - hypothesis
