@@ -1,6 +1,6 @@
 {% set name = "vmprof" %}
-{% set version = "0.4.12" %}
-{% set sha256 = "64c62cd737c88573447d1f90f29978fc3178a1663ddbdb60cdcb3f2c15e427da" %}
+{% set version = "0.4.15" %}
+{% set sha256 = "39ec09f84df30e9af566d1eefe8d53bfd89758febd3336e73e3648d1556e4108" %}
 
 package:
   name: {{ name|lower }}
@@ -59,9 +59,9 @@ about:
   summary: 'vmprof - a statistical program profiler'
 
   description: |
-    vmprof is a platform to understand and resolve performance bottlenecks in your code. 
-    It includes a lightweight profiler for CPython 2.7, CPython 3 and PyPy and 
-    an assembler log visualizer for PyPy. 
+    vmprof is a platform to understand and resolve performance bottlenecks in your code.
+    It includes a lightweight profiler for CPython 2.7, CPython 3 and PyPy and
+    an assembler log visualizer for PyPy.
   doc_url: https://vmprof.readthedocs.io
   dev_url: https://github.com/vmprof/vmprof-python
 
