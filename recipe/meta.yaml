@@ -40,7 +40,7 @@ test:
     - vmshare
   commands:
     - vmprofshow --help
-    - py.test vmprof/ -vrs
+    - CC=$CC py.test vmprof/ -vrs
   requires:
     - {{ compiler('c') }}
     - pytest
