@@ -10,7 +10,7 @@ source:
   url: https://github.com/vmprof/vmprof-python/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-  - patch/203.patch  # [osx]
+    - patch/203.patch  # [osx]
 
 build:
   number: 0
