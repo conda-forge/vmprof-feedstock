@@ -47,7 +47,6 @@ test:
     - pytest
     - cffi
     - hypothesis
-    - toolchain
   source_files:
     - vmprof
     - src
