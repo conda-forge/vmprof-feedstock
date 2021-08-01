@@ -40,8 +40,8 @@ test:
     - vmshare
   commands:
     - vmprofshow --help
-    - echo $CC; echo $CC_FOR_BUILD
-    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs
+    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs  # [unix]
+    - py.test vmprof/ -vrs  # [win]
   requires:
     - {{ compiler('c') }}
     - pytest
