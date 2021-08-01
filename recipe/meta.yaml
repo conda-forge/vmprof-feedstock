@@ -11,6 +11,7 @@ source:
   sha256: {{ sha256 }}
   patches:
     - patch/203.patch  # [osx]
+    - patch/test.patch  # [osx]
 
 build:
   number: 0
@@ -42,7 +43,7 @@ test:
     - vmshare
   commands:
     - vmprofshow --help
-    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs  # [unix]
+    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs  # [not win]
     - py.test vmprof/ -vrs  # [win]
   requires:
     - {{ compiler('c') }}
