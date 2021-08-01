@@ -41,7 +41,7 @@ test:
   commands:
     - vmprofshow --help
     - echo $CC; echo $CC_FOR_BUILD
-    - CC=$CC py.test vmprof/ -vrs
+    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs
   requires:
     - {{ compiler('c') }}
     - pytest
