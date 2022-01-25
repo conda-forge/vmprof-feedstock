@@ -12,6 +12,7 @@ source:
   patches:
     - patch/203.patch  # [osx]
     - patch/test.patch  # [osx]
+    - patch/remove_Werror.patch  # [osx]
 
 build:
   number: 0
@@ -71,3 +72,4 @@ about:
 extra:
   recipe-maintainers:
     - synapticarbors
+    - matthiasdiener
