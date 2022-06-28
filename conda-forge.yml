@@ -4,3 +4,4 @@ build_platform:
 github:
   branch_name: main
   tooling_branch_name: main
+test: native

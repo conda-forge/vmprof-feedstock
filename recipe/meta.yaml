@@ -16,7 +16,7 @@ source:
     - patch/244.patch  # [osx and arm64]
 
 build:
-  number: 2 
+  number: 2
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
     - vmprofshow = vmprof.show:main
@@ -24,6 +24,8 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
     - python
     - pip
