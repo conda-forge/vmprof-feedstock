@@ -13,9 +13,10 @@ source:
     - patch/203.patch  # [osx]
     - patch/test.patch  # [osx]
     - patch/remove-Werror.patch  # [osx]
+    - patch/244.patch  # [osx and arm64]
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
     - vmprofshow = vmprof.show:main
