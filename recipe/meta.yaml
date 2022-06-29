@@ -15,9 +15,12 @@ source:
     - patch/remove-Werror.patch  # [osx]
     - patch/244.patch  # [osx and arm64]
     - patch/aarch64.patch  # [arm64 or aarch64]
+    # These are unnecessary after 0.4.15:
+    - patch/237.patch  # [ppc64le]
+    - patch/239.patch  # [ppc64le]
 
 build:
-  number: 2
+  number: 3
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
     - vmprofshow = vmprof.show:main
