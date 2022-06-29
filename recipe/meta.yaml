@@ -14,8 +14,8 @@ source:
     - patch/test.patch  # [osx]
     - patch/remove-Werror.patch  # [osx]
     - patch/244.patch  # [osx and arm64]
-    - patch/aarch64.patch  # [arm64 or aarch64]
-    # These are unnecessary after 0.4.15:
+    - patch/aarch64.patch  # [arm64 or aarch64 or ppc64le]
+    # These are probably unnecessary after 0.4.15:
     - patch/237.patch  # [ppc64le]
     - patch/239.patch  # [ppc64le]
 

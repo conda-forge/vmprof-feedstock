@@ -61,36 +61,13 @@ index 2169f09e..adc37cdf 100644
 +++ b/src/vmprof.h
 @@ -49,7 +49,7 @@
  #endif
- 
+
  #ifdef VMPROF_UNIX
 -#if defined(X86_64) || defined(X86_32)
 +#if defined(X86_64) || defined(X86_32) || defined(__powerpc64__)
  #define VMP_SUPPORTS_NATIVE_PROFILING
  #endif
  #endif
-
-From 3ead781da887702fc4d657cd0997226efc82dcba Mon Sep 17 00:00:00 2001
-From: Matthias Diener <mdiener@illinois.edu>
-Date: Thu, 29 Jul 2021 10:22:11 -0700
-Subject: [PATCH 02/21] add to travis
-
----
- .travis.yml | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/.travis.yml b/.travis.yml
-index cc8674cb..4e9bdf50 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -56,6 +56,8 @@ matrix:
-       osx_image: xcode9.4
-       env:
-         - PYENV=3.6.1 MAC_WHEEL=1
-+    - os: linux
-+      arch: ppc64le
- addons:
-   apt:
-     packages:
 
 From 7f009cd3373158582ab308479c1eb60e9ce126b0 Mon Sep 17 00:00:00 2001
 From: Matthias Diener <matthias.diener@gmail.com>
@@ -115,165 +92,6 @@ index ea12ce2a..0ea2b382 100644
          if ((unw_getcontext = dlsym(libhandle, U_PREFIX PREFIX USCORE "getcontext")) == NULL) {
              goto bail_out;
 
-From 0c6fdef0b47d888925d4f7acaedeea5987103d11 Mon Sep 17 00:00:00 2001
-From: Matthias Diener <mdiener@illinois.edu>
-Date: Sun, 1 Aug 2021 18:18:58 +0200
-Subject: [PATCH 05/21] disable mac builds, add pyenv for ppc64le
-
----
- .travis.yml | 72 +++++++++++++++++++++++++++--------------------------
- 1 file changed, 37 insertions(+), 35 deletions(-)
-
-diff --git a/.travis.yml b/.travis.yml
-index 4e9bdf50..489a8a5f 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -21,43 +21,45 @@ matrix:
-     - python: 3.6
-     - python: 3.7
-     - python: 3.8
--    - os: osx
--      language: generic
--      osx_image: xcode7.3 # 7.3 is OS X 10.11.x
--      env:
--        - PYENV=3.5.3
--    - os: osx
--      language: generic
--      osx_image: xcode8.2 # 8.2 is macOS 10.12.x
--      env:
--        - PYENV=3.5.3
--    - os: osx
--      language: generic
--      osx_image: xcode8.2 # 8.2 is macOS 10.12.x
--      env:
--        - PYENV=3.6.1
--    - os: osx
--      language: generic
--      osx_image: xcode9.4
--      env:
--        - PYENV=2.7.13 MAC_WHEEL=1
--    - os: osx
--      language: generic
--      osx_image: xcode9.4
--      env:
--        - PYENV=3.7.6 MAC_WHEEL=1
--    - os: osx
--      language: generic
--      osx_image: xcode9.4
--      env:
--        - PYENV=3.5.3 MAC_WHEEL=1
--    - os: osx
--      language: generic
--      osx_image: xcode9.4
--      env:
--        - PYENV=3.6.1 MAC_WHEEL=1
-+    # - os: osx
-+    #   language: generic
-+    #   osx_image: xcode7.3 # 7.3 is OS X 10.11.x
-+    #   env:
-+    #     - PYENV=3.5.3
-+    # - os: osx
-+    #   language: generic
-+    #   osx_image: xcode8.2 # 8.2 is macOS 10.12.x
-+    #   env:
-+    #     - PYENV=3.5.3
-+    # - os: osx
-+    #   language: generic
-+    #   osx_image: xcode8.2 # 8.2 is macOS 10.12.x
-+    #   env:
-+    #     - PYENV=3.6.1
-+    # - os: osx
-+    #   language: generic
-+    #   osx_image: xcode9.4
-+    #   env:
-+    #     - PYENV=2.7.13 MAC_WHEEL=1
-+    # - os: osx
-+    #   language: generic
-+    #   osx_image: xcode9.4
-+    #   env:
-+    #     - PYENV=3.7.6 MAC_WHEEL=1
-+    # - os: osx
-+    #   language: generic
-+    #   osx_image: xcode9.4
-+    #   env:
-+    #     - PYENV=3.5.3 MAC_WHEEL=1
-+    # - os: osx
-+    #   language: generic
-+    #   osx_image: xcode9.4
-+    #   env:
-+    #     - PYENV=3.6.1 MAC_WHEEL=1
-     - os: linux
-       arch: ppc64le
-+      env:
-+        - PYENV=3.8.7
- addons:
-   apt:
-     packages:
-
-From cb76a4230a2e417176584afa4a28629cf3af4157 Mon Sep 17 00:00:00 2001
-From: Matthias Diener <mdiener@illinois.edu>
-Date: Sun, 1 Aug 2021 18:26:52 +0200
-Subject: [PATCH 06/21] fix python version
-
----
- .travis.yml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/.travis.yml b/.travis.yml
-index 489a8a5f..7d3c656f 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -58,8 +58,9 @@ matrix:
-     #     - PYENV=3.6.1 MAC_WHEEL=1
-     - os: linux
-       arch: ppc64le
-+      python: 3.6
-       env:
--        - PYENV=3.8.7
-+        - PYENV=3.6.12
- addons:
-   apt:
-     packages:
-
-From ee3bf668034c9081e1eadf898e3fe55a21782773 Mon Sep 17 00:00:00 2001
-From: Matthias Diener <mdiener@illinois.edu>
-Date: Sun, 1 Aug 2021 18:27:07 +0200
-Subject: [PATCH 07/21] disable other linux builds
-
----
- .travis.yml | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/.travis.yml b/.travis.yml
-index 7d3c656f..9df48c21 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -12,15 +12,15 @@ env:
- 
- matrix:
-   include:
--    - python: 2.7
--      services:
--        - docker
--      env:
--        - BUILD_LINUX_WHEEL=1 UPLOAD_SDIST=1
--    - python: 3.5
--    - python: 3.6
--    - python: 3.7
--    - python: 3.8
-+    # - python: 2.7
-+    #   services:
-+    #     - docker
-+    #   env:
-+    #     - BUILD_LINUX_WHEEL=1 UPLOAD_SDIST=1
-+    # - python: 3.5
-+    # - python: 3.6
-+    # - python: 3.7
-+    # - python: 3.8
-     # - os: osx
-     #   language: generic
-     #   osx_image: xcode7.3 # 7.3 is OS X 10.11.x
-
 From 4da20c6272a88c3c47c33810d7569708b50889db Mon Sep 17 00:00:00 2001
 From: Matthias Diener <mdiener@illinois.edu>
 Date: Wed, 27 Oct 2021 13:11:19 -0700
@@ -289,13 +107,13 @@ index 165b0b95..832cc7f3 100644
 +++ b/vmprof/test/test_run.py
 @@ -63,7 +63,7 @@ def read(self, count):
      COUNT = 10000
- 
+
  def function_foo():
 -    for k in range(1000):
 +    for k in range(10):
          l = [a for a in xrange(COUNT)]
      return l
- 
+
 
 From 48f8ce068d8dfed1a1b916b8c06ef5acf6561ff5 Mon Sep 17 00:00:00 2001
 From: Matthias Diener <mdiener@illinois.edu>
@@ -316,7 +134,7 @@ index 832cc7f3..e2e8beb2 100644
  else:
 -    COUNT = 10000
 +    COUNT = 1000
- 
+
  def function_foo():
      for k in range(10):
 
@@ -336,7 +154,7 @@ index e2e8beb2..411932d3 100644
 @@ -500,6 +500,7 @@ def setup_class(cls):
          cls.lib = clib.lib
          cls.ffi = clib.ffi
- 
+
 +    @py.test.mark.skipif("os.uname().machine == 'ppc64le'")
      def test_gzip_call(self):
          p = vmprof.Profiler()
@@ -357,13 +175,13 @@ index 411932d3..edefb530 100644
 +++ b/vmprof/test/test_run.py
 @@ -63,7 +63,7 @@ def read(self, count):
      COUNT = 1000
- 
+
  def function_foo():
 -    for k in range(10):
 +    for k in range(1000):
          l = [a for a in xrange(COUNT)]
      return l
- 
+
 
 From e85ed41f08fd64efb8ed0e35309b9234832a9a92 Mon Sep 17 00:00:00 2001
 From: Matthias Diener <mdiener@illinois.edu>
@@ -384,7 +202,7 @@ index edefb530..b146aa66 100644
  else:
 -    COUNT = 1000
 +    COUNT = 400
- 
+
  def function_foo():
      for k in range(1000):
 
@@ -407,13 +225,13 @@ index b146aa66..2b3349cf 100644
  else:
 -    COUNT = 400
 +    COUNT = 100
- 
+
  def function_foo():
 -    for k in range(1000):
 +    for k in range(10000):
          l = [a for a in xrange(COUNT)]
      return l
- 
+
 
 From 816fa82d681662cbfc01d2ca971d40c85db41f40 Mon Sep 17 00:00:00 2001
 From: Matthias Diener <mdiener@illinois.edu>
@@ -435,7 +253,7 @@ index 2b3349cf..4c0616f6 100644
 -    return l
 +        del(l)
 +    # return l
- 
+
  def function_bar():
      import time
 @@ -205,6 +206,7 @@ def test_multithreaded():
@@ -444,7 +262,7 @@ index 2b3349cf..4c0616f6 100644
              l = [a for a in xrange(COUNT)]
 +            del(l)
          finished.append("foo")
- 
+
      threads = [threading.Thread(target=f), threading.Thread(target=f)]
 
 From cf4c85f7c849d3731c73f4e5cee4368342685101 Mon Sep 17 00:00:00 2001
@@ -462,7 +280,7 @@ index 4c0616f6..1e0b6879 100644
 +++ b/vmprof/test/test_run.py
 @@ -63,7 +63,7 @@ def read(self, count):
      COUNT = 100
- 
+
  def function_foo():
 -    for k in range(10000):
 +    for k in range(7000):
@@ -471,14 +289,14 @@ index 4c0616f6..1e0b6879 100644
      # return l
 @@ -204,9 +204,8 @@ def test_multithreaded():
      finished = []
- 
+
      def f():
 -        for k in range(1000):
 +        for k in range(10000):
              l = [a for a in xrange(COUNT)]
 -            del(l)
          finished.append("foo")
- 
+
      threads = [threading.Thread(target=f), threading.Thread(target=f)]
 
 From ffe4814af8b9ba6d7f8c6eb1ae482fada2fa4936 Mon Sep 17 00:00:00 2001
@@ -496,7 +314,7 @@ index 1e0b6879..2579eb34 100644
 +++ b/vmprof/test/test_run.py
 @@ -63,7 +63,12 @@ def read(self, count):
      COUNT = 100
- 
+
  def function_foo():
 -    for k in range(7000):
 +    for k in range(1000):
@@ -526,11 +344,11 @@ index 4d65a17b..062bd241 100644
 @@ -6,7 +6,7 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
      source ~/.venv/bin/activate
  fi
- 
+
 -py.test vmprof/ -vrs
 +py.test vmprof/ -vrs -k "not test_basic"
  py.test jitlog/ -vrs
- 
+
  if [[ -n "$TRAVIS_TAG" ]]; then
 diff --git a/vmprof/test/test_run.py b/vmprof/test/test_run.py
 index 2579eb34..943d563e 100644
@@ -542,7 +360,7 @@ index 2579eb34..943d563e 100644
  else:
 -    COUNT = 100
 +    COUNT = 10000
- 
+
  def function_foo():
      for k in range(1000):
          l = [a for a in xrange(COUNT)]
@@ -554,160 +372,17 @@ index 2579eb34..943d563e 100644
 -        del(l)
 -    # return l
 +    return l
- 
+
  def function_bar():
      import time
 @@ -209,7 +203,7 @@ def test_multithreaded():
      finished = []
- 
+
      def f():
 -        for k in range(10000):
 +        for k in range(1000):
              l = [a for a in xrange(COUNT)]
          finished.append("foo")
- 
-
-From f96e2e58830fa459355b47488e0075673f82da04 Mon Sep 17 00:00:00 2001
-From: Matthias Diener <mdiener@illinois.edu>
-Date: Wed, 27 Oct 2021 14:35:21 -0700
-Subject: [PATCH 18/21] blacklist tests
-
----
- travis/script.sh | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/travis/script.sh b/travis/script.sh
-index 062bd241..fa38a1b6 100644
---- a/travis/script.sh
-+++ b/travis/script.sh
-@@ -6,7 +6,12 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
-     source ~/.venv/bin/activate
- fi
- 
--py.test vmprof/ -vrs -k "not test_basic"
-+if [[ "$(uname -m)" == 'ppc64le' ]]; then
-+    # Disabled due to memory restrictions on Travis ppc64le CI
-+    EXTRA_OPTS='-k not test_basic and not test_read_bit_by_bit and not test_enable_disable and not test_start_end_time and not test_nested_call and not test_line_profiling and not test_vmprof_show'
-+fi
-+
-+py.test vmprof/ -vrs "$EXTRA_OPTS"
- py.test jitlog/ -vrs
- 
- if [[ -n "$TRAVIS_TAG" ]]; then
-
-From de012a5fb85991acf068a041efb8cf681fb1badf Mon Sep 17 00:00:00 2001
-From: Matthias Diener <mdiener@illinois.edu>
-Date: Wed, 27 Oct 2021 14:41:56 -0700
-Subject: [PATCH 19/21] restore CI
-
----
- .travis.yml | 88 ++++++++++++++++++++++++++---------------------------
- 1 file changed, 44 insertions(+), 44 deletions(-)
-
-diff --git a/.travis.yml b/.travis.yml
-index 9df48c21..e098a0c0 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -12,55 +12,55 @@ env:
- 
- matrix:
-   include:
--    # - python: 2.7
--    #   services:
--    #     - docker
--    #   env:
--    #     - BUILD_LINUX_WHEEL=1 UPLOAD_SDIST=1
--    # - python: 3.5
--    # - python: 3.6
--    # - python: 3.7
--    # - python: 3.8
--    # - os: osx
--    #   language: generic
--    #   osx_image: xcode7.3 # 7.3 is OS X 10.11.x
--    #   env:
--    #     - PYENV=3.5.3
--    # - os: osx
--    #   language: generic
--    #   osx_image: xcode8.2 # 8.2 is macOS 10.12.x
--    #   env:
--    #     - PYENV=3.5.3
--    # - os: osx
--    #   language: generic
--    #   osx_image: xcode8.2 # 8.2 is macOS 10.12.x
--    #   env:
--    #     - PYENV=3.6.1
--    # - os: osx
--    #   language: generic
--    #   osx_image: xcode9.4
--    #   env:
--    #     - PYENV=2.7.13 MAC_WHEEL=1
--    # - os: osx
--    #   language: generic
--    #   osx_image: xcode9.4
--    #   env:
--    #     - PYENV=3.7.6 MAC_WHEEL=1
--    # - os: osx
--    #   language: generic
--    #   osx_image: xcode9.4
--    #   env:
--    #     - PYENV=3.5.3 MAC_WHEEL=1
--    # - os: osx
--    #   language: generic
--    #   osx_image: xcode9.4
--    #   env:
--    #     - PYENV=3.6.1 MAC_WHEEL=1
-+    - python: 2.7
-+      services:
-+        - docker
-+      env:
-+        - BUILD_LINUX_WHEEL=1 UPLOAD_SDIST=1
-+    - python: 3.5
-+    - python: 3.6
-+    - python: 3.7
-+    - python: 3.8
-     - os: linux
-       arch: ppc64le
-       python: 3.6
-       env:
-         - PYENV=3.6.12
-+    - os: osx
-+      language: generic
-+      osx_image: xcode7.3 # 7.3 is OS X 10.11.x
-+      env:
-+        - PYENV=3.5.3
-+    - os: osx
-+      language: generic
-+      osx_image: xcode8.2 # 8.2 is macOS 10.12.x
-+      env:
-+        - PYENV=3.5.3
-+    - os: osx
-+      language: generic
-+      osx_image: xcode8.2 # 8.2 is macOS 10.12.x
-+      env:
-+        - PYENV=3.6.1
-+    - os: osx
-+      language: generic
-+      osx_image: xcode9.4
-+      env:
-+        - PYENV=2.7.13 MAC_WHEEL=1
-+    - os: osx
-+      language: generic
-+      osx_image: xcode9.4
-+      env:
-+        - PYENV=3.7.6 MAC_WHEEL=1
-+    - os: osx
-+      language: generic
-+      osx_image: xcode9.4
-+      env:
-+        - PYENV=3.5.3 MAC_WHEEL=1
-+    - os: osx
-+      language: generic
-+      osx_image: xcode9.4
-+      env:
-+        - PYENV=3.6.1 MAC_WHEEL=1
- addons:
-   apt:
-     packages:
 
 From 3bde7d80b9605828099dff68694f3043fd8f10de Mon Sep 17 00:00:00 2001
 From: Matthias Diener <mdiener@illinois.edu>
@@ -725,36 +400,9 @@ index 943d563e..74a2b7ac 100644
 @@ -500,7 +500,7 @@ def setup_class(cls):
          cls.lib = clib.lib
          cls.ffi = clib.ffi
- 
+
 -    @py.test.mark.skipif("os.uname().machine == 'ppc64le'")
 +    @py.test.mark.skipif("PY3K and os.uname().machine == 'ppc64le'")
      def test_gzip_call(self):
          p = vmprof.Profiler()
          with p.measure(native=True):
-
-From e52f9d41adc236ff5215ea87f91d9c7a01d45a65 Mon Sep 17 00:00:00 2001
-From: Matthias Diener <mdiener@illinois.edu>
-Date: Thu, 28 Oct 2021 10:20:10 -0500
-Subject: [PATCH 21/21] try Python 3.8
-
-Co-authored-by: Matti Picus <matti.picus@gmail.com>
----
- .travis.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/.travis.yml b/.travis.yml
-index e098a0c0..de36ba98 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -23,9 +23,9 @@ matrix:
-     - python: 3.8
-     - os: linux
-       arch: ppc64le
--      python: 3.6
-+      python: 3.8
-       env:
--        - PYENV=3.6.12
-+        - PYENV=3.8.12
-     - os: osx
-       language: generic
-       osx_image: xcode7.3 # 7.3 is OS X 10.11.x
