@@ -52,7 +52,7 @@ test:
     - vmshare
   commands:
     - vmprofshow --help
-    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs  # [not win]
+    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs  # [not (ppc64le or win)]
     - py.test vmprof/ -vrs  # [win]
   requires:
     - {{ compiler('c') }}
