@@ -20,7 +20,7 @@ source:
     - patch/239.diff  # [ppc64le]
 
 build:
-  number: 3
+  number: 4
   script:
     - {{ PYTHON }} -m pip install . -vv  # [not (ppc64le or aarch64)]
     - LDFLAGS+=" -pthread" {{ PYTHON }} -m pip install . -vv  # [ppc64le or aarch64]
