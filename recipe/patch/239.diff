@@ -1,0 +1,89 @@
+diff --git a/src/unwind/vmprof_unwind.h b/src/unwind/vmprof_unwind.h
+index 2136f5cd..7729ce4d 100644
+--- a/src/unwind/vmprof_unwind.h
++++ b/src/unwind/vmprof_unwind.h
+@@ -15,6 +15,10 @@ typedef int32_t unw_sword_t;
+ #define UNW_REG_IP 16
+ typedef uint64_t unw_word_t;
+ typedef int64_t unw_sword_t;
++#elif defined (__powerpc64__)
++#define UNW_REG_IP 32
++typedef uint64_t unw_word_t;
++typedef int64_t unw_sword_t;
+ #else
+ // not supported platform
+ #endif
+diff --git a/src/vmp_stack.c b/src/vmp_stack.c
+index 2b38e6b7..0ea2b382 100644
+--- a/src/vmp_stack.c
++++ b/src/vmp_stack.c
+@@ -506,6 +506,9 @@ static void * libhandle = NULL;
+ #elif __x86_64__
+ #define PREFIX "x86_64"
+ #define LIBUNWIND_SUFFIX "-x86_64"
++#elif __powerpc64__
++#define PREFIX "ppc64"
++#define LIBUNWIND_SUFFIX "-ppc64"
+ #endif
+ #define U_PREFIX "_U"
+ #define UL_PREFIX "_UL"
+@@ -566,7 +569,15 @@ int vmp_native_enable(void) {
+         if ((unw_is_signal_frame = dlsym(libhandle, UL_PREFIX PREFIX "_is_signal_frame")) == NULL) {
+             goto bail_out;
+         }
+-        if ((unw_getcontext = dlsym(libhandle, U_PREFIX PREFIX "_getcontext")) == NULL) {
++#if __powerpc64__
++//getcontext() naming follows a different pattern on PPC64
++#define U_PREFIX
++#define PREFIX
++#define USCORE
++#else
++#define USCORE "_"
++#endif
++        if ((unw_getcontext = dlsym(libhandle, U_PREFIX PREFIX USCORE "getcontext")) == NULL) {
+             goto bail_out;
+         }
+     }
+diff --git a/src/vmprof.h b/src/vmprof.h
+index 2169f09e..adc37cdf 100644
+--- a/src/vmprof.h
++++ b/src/vmprof.h
+@@ -49,7 +49,7 @@
+ #endif
+ 
+ #ifdef VMPROF_UNIX
+-#if defined(X86_64) || defined(X86_32)
++#if defined(X86_64) || defined(X86_32) || defined(__powerpc64__)
+ #define VMP_SUPPORTS_NATIVE_PROFILING
+ #endif
+ #endif
+diff --git a/travis/script.sh b/travis/script.sh
+index 4d65a17b..fa38a1b6 100644
+--- a/travis/script.sh
++++ b/travis/script.sh
+@@ -6,7 +6,12 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
+     source ~/.venv/bin/activate
+ fi
+ 
+-py.test vmprof/ -vrs
++if [[ "$(uname -m)" == 'ppc64le' ]]; then
++    # Disabled due to memory restrictions on Travis ppc64le CI
++    EXTRA_OPTS='-k not test_basic and not test_read_bit_by_bit and not test_enable_disable and not test_start_end_time and not test_nested_call and not test_line_profiling and not test_vmprof_show'
++fi
++
++py.test vmprof/ -vrs "$EXTRA_OPTS"
+ py.test jitlog/ -vrs
+ 
+ if [[ -n "$TRAVIS_TAG" ]]; then
+diff --git a/vmprof/test/test_run.py b/vmprof/test/test_run.py
+index 165b0b95..74a2b7ac 100644
+--- a/vmprof/test/test_run.py
++++ b/vmprof/test/test_run.py
+@@ -500,6 +500,7 @@ def setup_class(cls):
+         cls.lib = clib.lib
+         cls.ffi = clib.ffi
+ 
++    @py.test.mark.skipif("PY3K and os.uname().machine == 'ppc64le'")
+     def test_gzip_call(self):
+         p = vmprof.Profiler()
+         with p.measure(native=True):

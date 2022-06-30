@@ -14,11 +14,16 @@ source:
     - patch/test.patch  # [osx]
     - patch/remove-Werror.patch  # [osx]
     - patch/244.patch  # [osx and arm64]
-    - patch/aarch64.patch  # [arm64 or aarch64]
+    - patch/aarch64.patch  # [arm64 or aarch64 or ppc64le]
+    # These are probably unnecessary after 0.4.15:
+    - patch/237.diff  # [ppc64le]
+    - patch/239.diff  # [ppc64le]
 
 build:
-  number: 2
-  script: {{ PYTHON }} -m pip install . -vv
+  number: 3
+  script:
+    - {{ PYTHON }} -m pip install . -vv  # [not (ppc64le or aarch64)]
+    - LDFLAGS+=" -pthread" {{ PYTHON }} -m pip install . -vv  # [ppc64le or aarch64]
   entry_points:
     - vmprofshow = vmprof.show:main
 
@@ -47,7 +52,7 @@ test:
     - vmshare
   commands:
     - vmprofshow --help
-    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs  # [not win]
+    - CC=$CC_FOR_BUILD py.test vmprof/ -vrs  # [not (ppc64le or win)]
     - py.test vmprof/ -vrs  # [win]
   requires:
     - {{ compiler('c') }}
