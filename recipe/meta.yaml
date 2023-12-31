@@ -1,6 +1,6 @@
 {% set name = "vmprof" %}
-{% set version = "0.4.15" %}
-{% set sha256 = "39ec09f84df30e9af566d1eefe8d53bfd89758febd3336e73e3648d1556e4108" %}
+{% set version = "0.4.16" %}
+{% set sha256 = "104784fa4a6b97b3a05317042652eb6b70ee6a998a830514d05208269440918f" %}
 
 package:
   name: {{ name|lower }}
@@ -20,7 +20,7 @@ source:
     - patch/239.diff  # [ppc64le]
 
 build:
-  number: 3
+  number: 0
   script:
     - {{ PYTHON }} -m pip install . -vv  # [not (ppc64le or aarch64)]
     - LDFLAGS+=" -pthread" {{ PYTHON }} -m pip install . -vv  # [ppc64le or aarch64]
