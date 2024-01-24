@@ -9,15 +9,6 @@ package:
 source:
   url: https://github.com/vmprof/vmprof-python/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    #- patch/203.patch
-    #- patch/test.patch  # [osx]
-    #- patch/remove-Werror.patch  # [osx]
-    #- patch/244.patch  # [osx and arm64]
-    #- patch/aarch64.patch  # [arm64 or aarch64 or ppc64le]
-    # These are probably unnecessary after 0.4.15:
-    #- patch/237.diff  # [ppc64le]
-    #- patch/239.diff  # [ppc64le]
 
 build:
   number: 0
