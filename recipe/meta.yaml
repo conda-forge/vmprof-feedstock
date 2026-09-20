@@ -1,6 +1,6 @@
 {% set name = "vmprof" %}
-{% set version = "0.4.17" %}
-{% set sha256 = "bfd1800b5c9520aff3790b7e0ee0b6086506f6d161bedc69135e306141ca7bac" %}
+{% set version = "0.5.0" %}
+{% set sha256 = "0b92e51c579b3439747a2d754c721a884624381a72fb59e238c6357a8028551d" %}
 
 package:
   name: {{ name|lower }}
@@ -21,6 +21,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
