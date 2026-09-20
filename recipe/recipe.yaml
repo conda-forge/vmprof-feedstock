@@ -62,6 +62,7 @@ tests:
         - pytest
         - cffi
         - hypothesis
+        - setuptools >=77
     script:
       - vmprofshow --help
       - if: not (ppc64le or aarch64 or win)
