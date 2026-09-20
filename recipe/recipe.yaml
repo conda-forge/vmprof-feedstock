@@ -33,13 +33,14 @@ requirements:
   host:
     - python
     - pip
-    - meson-python
+    - meson-python >=0.17
     - if: linux
       then: libunwind
   run:
     - python
     - requests
     - colorama
+    - six
     - if: linux
       then: libunwind
 
