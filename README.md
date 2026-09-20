@@ -11,12 +11,11 @@ Summary: vmprof - a statistical program profiler
 
 Development: https://github.com/vmprof/vmprof-python
 
-Documentation: https://vmprof.readthedocs.io
+Documentation: https://vmprof.readthedocs.io/
 
 vmprof is a platform to understand and resolve performance bottlenecks in your code.
 It includes a lightweight profiler for CPython 2.7, CPython 3 and PyPy and
 an assembler log visualizer for PyPy.
-
 
 Current build status
 ====================
