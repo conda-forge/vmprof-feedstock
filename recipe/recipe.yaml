@@ -1,0 +1,86 @@
+schema_version: 1
+
+context:
+  version: "0.5.0"
+
+package:
+  name: vmprof
+  version: ${{ version }}
+
+source:
+  url: https://github.com/vmprof/vmprof-python/archive/${{ version }}.tar.gz
+  sha256: 0b92e51c579b3439747a2d754c721a884624381a72fb59e238c6357a8028551d
+
+build:
+  number: 0
+  script:
+    - if: not (ppc64le or aarch64)
+      then: ${{ PYTHON }} -m pip install . -vv
+    - if: ppc64le or aarch64
+      then: LDFLAGS+=" -pthread" ${{ PYTHON }} -m pip install . -vv
+  python:
+    entry_points:
+      - vmprofshow = vmprof.show:main
+
+requirements:
+  build:
+    - if: build_platform != target_platform
+      then: 
+        - python
+        - cross-python_${{ target_platform }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+  host:
+    - python
+    - pip
+    - meson-python
+    - if: linux
+      then: libunwind
+  run:
+    - python
+    - requests
+    - colorama
+    - if: linux
+      then: libunwind
+
+tests:
+  - python:
+      imports:
+        - vmprof
+        - jitlog
+        - vmshare
+      pip_check: false
+  - files:
+      source:
+        - vmprof
+        - src
+    requirements:
+      run:
+        - ${{ compiler('c') }}
+        - zlib
+        - pytest
+        - cffi
+        - hypothesis
+    script:
+      - vmprofshow --help
+      - if: not (ppc64le or aarch64 or win)
+        then: CC=$CC_FOR_BUILD py.test vmprof/ -vrs
+      - if: win
+        then: py.test vmprof/ -vrs
+
+about:
+  license: MIT
+  license_file: LICENSE
+  summary: vmprof - a statistical program profiler
+  description: |
+    vmprof is a platform to understand and resolve performance bottlenecks in your code.
+    It includes a lightweight profiler for CPython 2.7, CPython 3 and PyPy and
+    an assembler log visualizer for PyPy.
+  homepage: https://github.com/vmprof/vmprof-python
+  repository: https://github.com/vmprof/vmprof-python
+  documentation: https://vmprof.readthedocs.io
+
+extra:
+  recipe-maintainers:
+    - synapticarbors
+    - matthiasdiener
