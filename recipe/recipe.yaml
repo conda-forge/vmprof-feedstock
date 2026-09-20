@@ -66,7 +66,16 @@ tests:
     script:
       - vmprofshow --help
       - if: not (ppc64le or aarch64 or win)
-        then: CC=$CC_FOR_BUILD py.test vmprof/ -vrs
+        then:
+          # The cffi test extensions are built with "-Werror -O0". glibc emits a
+          # (fatal under -Werror) warning for _FORTIFY_SOURCE without -O, so
+          # undefine it after conda-forge's CFLAGS have defined it.
+          - export CFLAGS="${CFLAGS} -U_FORTIFY_SOURCE"
+          # test_resolve_addr stores the resolved source path in a 128-byte
+          # buffer. rattler-build's test-files directory is too deep for that,
+          # so run the tests from a short temporary path.
+          - tmpdir=$(mktemp -d) && cp -r vmprof src "$tmpdir" && cd "$tmpdir"
+          - CC=$CC_FOR_BUILD py.test vmprof/ -vrs
       - if: win
         then: py.test vmprof/ -vrs
 
