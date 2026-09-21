@@ -271,5 +271,6 @@ Feedstock Maintainers
 =====================
 
 * [@matthiasdiener](https://github.com/matthiasdiener/)
+* [@mattip](https://github.com/mattip/)
 * [@synapticarbors](https://github.com/synapticarbors/)
 
