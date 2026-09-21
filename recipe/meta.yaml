@@ -72,5 +72,6 @@ about:
 
 extra:
   recipe-maintainers:
+    - mattip
     - synapticarbors
     - matthiasdiener
