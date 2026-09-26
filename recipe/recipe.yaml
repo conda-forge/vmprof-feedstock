@@ -12,12 +12,11 @@ source:
   sha256: 0b92e51c579b3439747a2d754c721a884624381a72fb59e238c6357a8028551d
 
 build:
-  number: 0
+  number: 1
   script:
     - if: not (ppc64le or aarch64)
       then: ${{ PYTHON }} -m pip install . -vv
-    - if: ppc64le or aarch64
-      then: LDFLAGS+=" -pthread" ${{ PYTHON }} -m pip install . -vv
+      else: LDFLAGS+=" -pthread" ${{ PYTHON }} -m pip install . -vv
   python:
     entry_points:
       - vmprofshow = vmprof.show:main
@@ -25,7 +24,7 @@ build:
 requirements:
   build:
     - if: build_platform != target_platform
-      then: 
+      then:
         - python
         - cross-python_${{ target_platform }}
     - ${{ compiler('c') }}
