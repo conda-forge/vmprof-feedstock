@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "0.5.0"
+  version: "0.6.0"
 
 package:
   name: vmprof
@@ -9,10 +9,10 @@ package:
 
 source:
   url: https://github.com/vmprof/vmprof-python/archive/${{ version }}.tar.gz
-  sha256: 0b92e51c579b3439747a2d754c721a884624381a72fb59e238c6357a8028551d
+  sha256: 5ab8bffd61c2f81790f7552940587bd381c1f248b9be9d3f24393fcc8e40dc70
 
 build:
-  number: 1
+  number: 0
   script:
     - if: not (ppc64le or aarch64)
       then: ${{ PYTHON }} -m pip install . -vv
